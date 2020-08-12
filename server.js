@@ -15,8 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.write('Successful request.\n');
-  res.write('Another line.');
-  res.end();
+  res.status(200).end();
 });
 
 app.post('/', (req, res) => {
