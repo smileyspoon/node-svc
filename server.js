@@ -1,4 +1,4 @@
-// simple microservice. This was challenging for a non-node expert. JSON.stringify was the key, 
+// simple microservice. JSON.stringify was the key, 
 // also understanding that res.send is a hard stop.
 
 'use strict';
@@ -15,8 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.write('Successful request.\n');
-  res.write('Another line.');
-  res.end();
+  res.status(200).end();
 });
 
 app.post('/', (req, res) => {
