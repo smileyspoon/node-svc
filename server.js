@@ -1,4 +1,4 @@
-// simple microservice. This was challenging for a non-node expert. JSON.stringify was the key, 
+// simple microservice. JSON.stringify was the key, 
 // also understanding that res.send is a hard stop.
 
 'use strict';
