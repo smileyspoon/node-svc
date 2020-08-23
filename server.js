@@ -16,13 +16,61 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.write('<H1>This server registers a successful get.\n<H1>')
+  res.write('Successful get from ');
   res.write(req.ip);
   res.status(200).end();
   console.log('Server returned success on get.')
 });
 
 app.post('/', (req, res) => {
+  var myData = req.body;
+  console.log('Server got json:', myData);
+  var now = new Date();
+  myData.ip = req.ip;
+  myData.date = now;
+  console.log('Server updated json:', myData); 
+  //res.json(myData2);
+  var myData2 = JSON.stringify(myData);
+  res.write(myData2); //
+  res.status(200).end();
+  console.log('Server returned success on post.')
+});
+
+// this is where I need to think hard. 
+// this code could be running on any node
+// if someone posts to /1, what to do? 
+// call node-svc-01? that could be a loop. 
+// I really don't want any conditionals
+// how about: if you post to /1, it calls all the 2s 
+// that's an OK start
+app.get('/1', (req, res) => {
+  res.write('<This server registers a successful get on api /1.\n')
+  res.write(req.ip);
+  res.write('/n');
+  //make 2 external calls
+   console.dir("calling 01");
+   Request.get("http://node-svc-01:3000/2", (error, response, body) => {
+    if(error) {
+        return console.dir(error);
+    }
+    console.dir(body);
+   });
+   console.dir("calling 01");
+   
+   Request.get("http://node-svc-02:3000/2", (error, response, body) => {
+    if(error) {
+        return console.dir(error);
+    }
+    console.dir(body);
+  });
+
+  
+  res.status(200).end();
+  console.log('/1 Server completed get.')
+});
+
+
+app.post('/1', (req, res) => {
   var myData = req.body;
   console.log('Server got json:', myData);
   var now = new Date();
@@ -36,6 +84,13 @@ app.post('/', (req, res) => {
   console.log('Server returned success on post.')
 });
 
+app.get('/2', (req, res) => {
+  res.write('/2 Successful get from ');
+  res.write(req.ip);
+  res.write('\n');
+  res.status(200).end();
+  console.log('/2 Server returned success on get.')
+});
 
 app.listen(PORT, HOST);
 
