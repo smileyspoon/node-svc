@@ -10,7 +10,7 @@ git push origin 02a
 
 # push to 02 and restart
 rsh node-user@${NODE_IP_02} "sudo pkill 'nodejs'"
-sleep 3
+rsh node-user@${NODE_IP_02} sudo chmod 666 /home/node-user/node-svc-v1/server.js
 scp -r server.js node-user@${NODE_IP_02}:/home/node-user/node-svc-v1
 rsh node-user@${NODE_IP_02} "sudo nodejs node-svc-v1/server.js &"
 
