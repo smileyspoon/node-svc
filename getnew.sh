@@ -7,3 +7,9 @@ scp -r node-user@${NODE_IP_01}:/home/node-user/node-svc-v1/server.js /home/betz4
 git add . -A
 git commit -m "updated server.js"
 git push origin 02a
+
+# push to 02 and restart
+scp -r server.js node-user@${NODE_IP_02}:/home/node-user/node-svc-v1
+rsh node-user@${NODE_IP_02} "sudo pkill 'nodejs'"
+rsh node-user@${NODE_IP_02} "sudo nodejs node-svc-v1/server.js &"
+
