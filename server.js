@@ -93,7 +93,7 @@ app.get('/2', (req, res) => {
   res.write(req.ip);
   //res.write("\n");
   res.status(200).end();
-  console.log("Console: /2 Server returned success on get.\n")
+  console.log("Console: /2 Server completed get.\n")
 });
 
 app.listen(PORT, HOST);
