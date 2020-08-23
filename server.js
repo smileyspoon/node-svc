@@ -43,9 +43,9 @@ app.post('/', (req, res) => {
 // how about: if you post to /1, it calls all the 2s 
 // that's an OK start
 app.get('/1', (req, res) => {
-  res.write("This server registers a successful get on api /1.\n")
+  res.write("This server registers a successful get on api /1. ")
   res.write(req.ip);
-  res.write("/n");
+  //res.write("/n");
   //make 2 external calls
    console.dir("calling node-svc-01");
    Request.get("http://node-svc-01:3000/2", (error, response, body) => {
