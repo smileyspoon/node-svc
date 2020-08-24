@@ -4,8 +4,9 @@
 
 'use strict';
 const express = require('express');
+const fetch = require('node-fetch');
 const bodyParser = require('body-parser')
-var Request = require("request");
+const Request = require("request");
 
 // Constants
 const PORT = 3000;
@@ -54,21 +55,34 @@ app.get('/1', (req, res) => {
      if(error) {
         return console.dir(error);
      }
-     //res.write("01 responded");
-     console.dir(body);
+       //res.write("can i respond here"); // write after end error
+       //this.res.write("i'll be amazed."); //Cannot read property 'write' of undefined. this.write also didn't work
+       console.dir("01 body returned.")
+       //console.dir(response);
+       var body01 = body;
+       console.log("moved to body01:\n " + body01 + "\n\n");
+       
+        // it outputs to the console but can't incorporate it into the response via res.write. 
+        // scoping almost certainly. 
      });
-     //res.write(JSON.stringify(body));
+     //res.write(body); // no
+     //res.write(JSON.stringify(body)); // no
 
+     // console.log("2nd time: \n" + body01+ "\n\n"); // no fell out of scope
      // call 02
      console.dir("Console: calling node-svc-02")
      Request.get("http://node-svc-02:3000/2", (error, response, body) => {
      if(error) {
         return console.dir(error);
      }
-      console.dir(body);
+       console.dir("02 body returned.")
+       console.dir(body);
     });
-
-  
+    res.write("anything?\n"); //I *can* still write response here. So problem is variable. 
+  //res.write(body); //no
+  //res.write(JSON.stringify(body)); //no
+   
+  //console.log("3nd time: \n" + body01+ "\n\n"); // no fell out of scope
   res.status(200).end();
   console.log("Console: /1 Server completed get.\n")
 });
@@ -103,6 +117,11 @@ console.log(`Running on ${PORT}`);
 // test a simple self-get
 
 console.log('Console: request is testing a simple self-get')
+
+//fetch('http://localhost:3000')
+//  .then(response => response.json())
+//  .then(data => console.log(data));
+
 
 Request.get("http://localhost:3000", (error, response, body) => {
     if(error) {
