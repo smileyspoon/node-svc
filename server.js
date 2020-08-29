@@ -82,14 +82,14 @@ console.log(`Running on ${PORT}`);
 
 console.log('Console: request is testing a simple self-get')
 
-fetch('http://localhost:3001')
+fetch('http://localhost:3000')
   .then(response => response.json())
   .then(data => console.log(data));
 
 // test a simple self-post
 console.log('Console: request is testing a simple self-post')
 
-const url ='http://localhost:3001';
+const url ='http://localhost:3000';
 const headers = {
   "Content-Type": "application/json"
 };
