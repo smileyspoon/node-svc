@@ -3,6 +3,9 @@
 // simple microservice. 
 
 'use strict';
+const arrNodes = [ "node-svc-01" ]
+//const arrNodes = [ "node-svc-01", "node-svc-02" ]
+//const arrNodes = [ "node-svc-01", "node-svc-02" , "node-svc-03" ]
 const express = require('express');
 const fetch = require('node-fetch');
 const bodyParser = require('body-parser')
@@ -16,7 +19,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
+app.get('/0?', (req, res) => {     // matches either / or /0
   (async () => {
   const myWrite = await res.write(dateIPStamp({ "action":"GET" }, req.ip));
   const myEnd = await res.status(200).end();
@@ -25,7 +28,7 @@ app.get('/', (req, res) => {
 });
 
 // app.get('/:depth(\d+)', (req, res) => {   // WHY does this not work
-app.get('/:depth', (req, res) => {
+app.get('/:depth', (req, res) => {   // everything else but / or /0
   console.log("/1 GET, making GET subrequest");
   console.log ("got "+ JSON.stringify(req.params));
   console.log ("isNumeric " + isNumeric(req.params.depth));
@@ -35,28 +38,19 @@ app.get('/:depth', (req, res) => {
     res.status(405).end();
     return;
   }
-  let numNodes = 2; // to be derived from arrNodes
-  let intDepth = parseInt(req.params.depth);
-         let nodeNum = numNodes;
-
-  for (let intLevel = intDepth; intLevel >=0; intLevel =  intLevel - numNodes) {
-   console.log(intLevel);
-    for (let intNodeCall = intLevel; 
-         intNodeCall > (intLevel - numNodes) & intNodeCall > 0; 
-         intNodeCall--) {
-         console.log(" call node" + nodeNum); // making the call here
-         if (nodeNum >1) {nodeNum--} else {nodeNum = numNodes}; 
-    }
-   // round robin? list of n servers as  initialization
-  // assume array of servers has been imported as javascript object 
-  
-  // 
-  }
-    console.log ("intLevel is now 0, call node " + nodeNum);
-  //
+  // what is the formula for which node to call? 
+  // given x levels and n nodes
+  // x % n  where x>n, else n
+  let intCurrLevel = parseInt(req.params.depth);
+  let numNodes = arrNodes.length; // to be derived from arrNodes
+  let nextLevel = intCurrLevel - 1;
+  console.log ("nextLevel " + nextLevel + " numNodes " + numNodes);  
+  let nextNode = nextLevel >= numNodes ? nextLevel % numNodes : nextLevel;
+  let strURL = buildURL(arrNodes[nextNode], nextLevel);
+  console.log ("calling node " + strURL);
 
   (async () => {
-	const response = await fetch('http://node-svc-02:3000');
+	const response = await fetch(strURL);
 	const json = await response.json();
 	console.log(json);
         res.write(dateIPStamp(json, req.ip));  
@@ -155,4 +149,9 @@ function isNumeric(strIn) {
   // returns  bool
   let re = /\d+/;
   return (re.test(strIn));
+}
+ 
+function buildURL (strHostIn, intLevel) {
+   console.log  ("entered buildURL with strHostIn: " + strHostIn + " intLevel " + intLevel);
+   return("http://" + strHostIn + ":3000/" + intLevel);
 }
