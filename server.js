@@ -41,7 +41,7 @@ app.get('/1', (req, res) => {
 app.get('/2', (req, res) => {
   console.log("/2 GET, making GET subrequest");
   (async () => {
-        const response = await fetch('http://node-svc-01:3000/1');
+        const response = await fetch('http://node-svc-02:3000/1');
         const json = await response.json();
         console.log(json);
         res.write(dateIPStamp(json, req.ip));  
@@ -107,7 +107,6 @@ fetch(url, { method: 'POST', headers: headers, body: postData})
      return res.json()
 })
 .then((json) => {
-   // Do something with the returned data.
   console.log(json);
 });
 
@@ -116,16 +115,11 @@ function dateIPStamp(recdJSON, someIP) {
   console.log ("DateIPStamp reached with " + JSON.stringify(recdJSON) + " " + someIP);
   let now = new Date();
   if (!recdJSON.hasOwnProperty("arrTimeStamp")) {
-  console.log("no array");
   recdJSON.arrTimeStamp = [ someIP + " " + now ];
   } else {
-  console.log ("array");
   recdJSON["arrTimeStamp"].push(someIP + " " + now)
   };
-  //recdJSON.ip = someIP;
-  //recdJSON.date = now;
-  let returnJSON = JSON.stringify(recdJSON);
-  //console.log('testFunc reached' + returnJSON);
-  return(returnJSON);
+  let strReturnJSON = JSON.stringify(recdJSON);
+  return(strReturnJSON);
   
 }
