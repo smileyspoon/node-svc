@@ -18,18 +18,36 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.write(dateIPStamp({ "action":"GET" }, req.ip));
-  res.status(200).end();
-  console.log('Console: / Server returned success on get.')
+  (async () => {
+  const myWrite = await res.write(dateIPStamp({ "action":"GET" }, req.ip));
+  const myEnd = await res.status(200).end();
+  await console.log('Console: / Server returned success on get.');
+  })();
 });
 
 app.get('/1', (req, res) => {
-   let recd = fetch('http://node-svc-01:3000')
-         .then(response => response.json())
-         .then(resjson => {console.log("/1 subrequest rec'd" + JSON.stringify(resjson)); })
-  res.write(dateIPStamp(recd, req.ip));
-  res.status(200).end();
-  console.log('Console: /1 Server returned success on get.')
+  console.log("/1 GET, making GET subrequest");
+
+  (async () => {
+	const response = await fetch('http://node-svc-01:3000');
+	const json = await response.json();
+	console.log(json);
+        res.write(dateIPStamp(json, req.ip));  
+        res.status(200).end();
+        console.log('Console: /1 Server returned success on get.');
+  })();
+});
+
+app.get('/2', (req, res) => {
+  console.log("/2 GET, making GET subrequest");
+  (async () => {
+        const response = await fetch('http://node-svc-01:3000/1');
+        const json = await response.json();
+        console.log(json);
+        res.write(dateIPStamp(json, req.ip));  
+        res.status(200).end();
+        console.log('Console: /2 Server returned success on get.');
+  })();
 });
 
 app.post('/', (req, res) => {
@@ -44,40 +62,19 @@ app.post('/', (req, res) => {
 });
 
 app.post('/1', (req, res) => {
-  console.log ("Console: entered /1 post");
-  let recd = req.body;
-  console.log('Console: /1 received southbound POST with ' + JSON.stringify(recd));
-  recd.action = "POST";
-  const url ='http://node-svc-01:3000';
-  console.log("Console: /1 attempting POST with " + JSON.stringify(recd));
-
-  const get_data = async url => {
-  try {
-    const response = await fetch(url, { method: 'POST', body: recd});
-    const json = await response.json();
-    console.log(json);
-    return json;
-      } catch (error) {
-        console.log(error);
-      }
-  };
-
-  let x = (async() => {await get_data(url)} )(); 
-
-  res.write(x);
-   console.log("Console: exited fetch with " + x);
-  res.status(200).end();
-  console.log('Console: /1 ending post.')
-  }
-);
-
-app.get('/2', (req, res) => {
-   let recd = fetch('http://node-svc-01:3000/1')
-         .then(response => response.json())
-         .then(resjson => {console.log("/2 subrequest rec'd" + JSON.stringify(resjson)); })
-  res.write(dateIPStamp(recd, req.ip));
-  res.status(200).end();
-  console.log('Console: /2 Server returned success on get.')
+  console.log ("Console: /1 POST");
+  (async () => {
+        console.log("/1 POST trying subrequest");
+        const recd = await req.body;
+        const headers = {"Content-Type": "application/json"};
+        const postData = await JSON.stringify({recd});
+        const response = await fetch('http://node-svc-01:3000', { method: 'POST', headers: headers, body: postData});
+        const json = await response.json();
+        console.log(json);
+        res.write(dateIPStamp(json, req.ip));  
+        res.status(200).end();
+        console.log('Console: /1 Server returned success on get.');
+  })();
 });
 
 
@@ -117,9 +114,16 @@ fetch(url, { method: 'POST', headers: headers, body: postData})
 
 function dateIPStamp(recdJSON, someIP) {
   console.log ("DateIPStamp reached with " + JSON.stringify(recdJSON) + " " + someIP);
-  recdJSON.ip = someIP;
   let now = new Date();
-  recdJSON.date = now;
+  if (!recdJSON.hasOwnProperty("arrTimeStamp")) {
+  console.log("no array");
+  recdJSON.arrTimeStamp = [ someIP + " " + now ];
+  } else {
+  console.log ("array");
+  recdJSON["arrTimeStamp"].push(someIP + " " + now)
+  };
+  //recdJSON.ip = someIP;
+  //recdJSON.date = now;
   let returnJSON = JSON.stringify(recdJSON);
   //console.log('testFunc reached' + returnJSON);
   return(returnJSON);
