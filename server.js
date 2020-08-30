@@ -1,7 +1,6 @@
 
 
-// simple microservice. JSON.stringify was the key, 
-// also understanding that res.send is a hard stop.
+// simple microservice. 
 
 'use strict';
 const express = require('express');
@@ -25,11 +24,39 @@ app.get('/', (req, res) => {
   })();
 });
 
-app.get('/1', (req, res) => {
+// app.get('/:depth(\d+)', (req, res) => {   // WHY does this not work
+app.get('/:depth', (req, res) => {
   console.log("/1 GET, making GET subrequest");
+  console.log ("got "+ JSON.stringify(req.params));
+  console.log ("isNumeric " + isNumeric(req.params.depth));
+  if (!isNumeric(req.params.depth)) { 
+    console.log("non-numeric path attempted");
+    res.write("error, only numeric depth path supported");
+    res.status(405).end();
+    return;
+  }
+  let numNodes = 2; // to be derived from arrNodes
+  let intDepth = parseInt(req.params.depth);
+         let nodeNum = numNodes;
+
+  for (let intLevel = intDepth; intLevel >=0; intLevel =  intLevel - numNodes) {
+   console.log(intLevel);
+    for (let intNodeCall = intLevel; 
+         intNodeCall > (intLevel - numNodes) & intNodeCall > 0; 
+         intNodeCall--) {
+         console.log(" call node" + nodeNum); // making the call here
+         if (nodeNum >1) {nodeNum--} else {nodeNum = numNodes}; 
+    }
+   // round robin? list of n servers as  initialization
+  // assume array of servers has been imported as javascript object 
+  
+  // 
+  }
+    console.log ("intLevel is now 0, call node " + nodeNum);
+  //
 
   (async () => {
-	const response = await fetch('http://node-svc-01:3000');
+	const response = await fetch('http://node-svc-02:3000');
 	const json = await response.json();
 	console.log(json);
         res.write(dateIPStamp(json, req.ip));  
@@ -122,4 +149,10 @@ function dateIPStamp(recdJSON, someIP) {
   let strReturnJSON = JSON.stringify(recdJSON);
   return(strReturnJSON);
   
+}
+
+function isNumeric(strIn) {
+  // returns  bool
+  let re = /\d+/;
+  return (re.test(strIn));
 }
