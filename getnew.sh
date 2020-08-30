@@ -9,7 +9,7 @@ scp -r node-user@${NODE_IP_01}:/home/node-user/node-svc-v1/package.json .
 #commit
 git add . -A
 git commit -m "updated server.js"
-git push origin 02a
+git push origin 02
 
 # kill and restart 01
 rsh node-user@${NODE_IP_01} "sudo pkill 'nodejs'"
