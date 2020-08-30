@@ -50,22 +50,22 @@ app.post('/1', (req, res) => {
   recd.action = "POST";
   const url ='http://node-svc-01:3000';
   console.log("Console: /1 attempting POST with " + JSON.stringify(recd));
-  // try passing res into the fetch function
-  let recd2 =   (async () => {
-        const body = recd;
-	const response = await fetch(url, {
-		method: 'post',
-		body: JSON.stringify(body),
-		headers: {'Content-Type': 'application/json'}
-	});
-	const json = await response.json();
-        recd2 = await dateIPStamp(json, req.ip);
-	console.log("Console: /1 received northbound " +recd2);
-        return recd2;
-  })();
-   console.log("Console: exited fetch with " + recd2);
-  res.write("placeholder");
-  //res.write(recd2);
+
+  const get_data = async url => {
+  try {
+    const response = await fetch(url, { method: 'POST', body: recd});
+    const json = await response.json();
+    console.log(json);
+    return json;
+      } catch (error) {
+        console.log(error);
+      }
+  };
+
+  let x = (async() => {await get_data(url)} )(); 
+
+  res.write(x);
+   console.log("Console: exited fetch with " + x);
   res.status(200).end();
   console.log('Console: /1 ending post.')
   }
@@ -114,6 +114,7 @@ fetch(url, { method: 'POST', headers: headers, body: postData})
   console.log(json);
 });
 
+
 function dateIPStamp(recdJSON, someIP) {
   console.log ("DateIPStamp reached with " + JSON.stringify(recdJSON) + " " + someIP);
   recdJSON.ip = someIP;
@@ -123,4 +124,4 @@ function dateIPStamp(recdJSON, someIP) {
   //console.log('testFunc reached' + returnJSON);
   return(returnJSON);
   
-};
+}
