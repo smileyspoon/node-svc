@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/repos/node-svc-1
+cd ~/repos/node-svc-v1
 
 # pull from 01
 scp -r node-user@${NODE_IP_01}:/home/node-user/node-svc-v1/server.js .
