@@ -113,7 +113,6 @@ function boolValidateRoute (res, strRoute) {
     return false; } else  { return true; }
   }
 
-
 function dateIPStamp(recdJSON, someIP) {
   console.log ("DateIPStamp reached with " + JSON.stringify(recdJSON) + " " + someIP);
   let now = new Date();
