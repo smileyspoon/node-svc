@@ -1,15 +1,6 @@
 #!/bin/bash
 
-echo 
-echo "#############################"
-echo "test script executing default curl localhost:8081"
-curl  localhost:8081
-echo
+curl ${NODE_IP_01}:3000
+curl ${NODE_IP_01}:3000/1
+#curl -X POST -H "Content-Type: application/json"  -d '{"username":"abc" }' ${NODE_IP_01}:3000/1 
 
-echo "test script posting with parameter 1"
-echo
-curl  -d "1" -X POST localhost:8081 
-echo
-echo
-echo "#############################"
-echo
