@@ -1,0 +1,42 @@
+---
+- name: Deploy node-svc App
+  hosts: node-svc-grp
+  tasks:
+    - name: Fetch the latest version of application code
+    # see https://docs.ansible.com/ansible/latest/modules/git_module.html
+      git:
+        repo: 'https://github.com/dm-academy/node-svc-v1'
+        dest: /home/node-user/node-svc-1
+        version: "02"
+      register: git_finished
+
+    - name: NPM install express and initialize app
+    # see https://docs.ansible.com/ansible/latest/modules/npm_module.html
+      npm:
+        name: express
+        global: yes
+      become: true
+ 
+    - name: install PM2
+      npm:
+    # see https://pypi.org/project/ansible-modules-pm2/
+        name: pm2
+        global: yes
+      become: true
+
+    - name: Install packages based on package.json.
+      npm:
+        path: /home/node-user/node-svc-1
+
+    - name: start server.js if not running
+    # https://pm2.keymetrics.io/docs/usage/quick-start/
+    # also consider https://pypi.org/project/ansible-modules-pm2/ 
+      command: pm2 start server.js chdir=/home/node-user/node-svc-1
+      ignore_errors: yes
+      become: true
+      #pm2:
+      #  name: node-svc
+      #  script: /home/node-user/node-svc-1/server.js
+      #  state: started
+
+
