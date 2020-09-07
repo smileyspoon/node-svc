@@ -3,8 +3,12 @@
 // simple microservice. 
 
 'use strict';
+//35.188.104.173
+//35.226.138.226
+//34.123.163.9
+const arrNodes = [ "34.123.163.9" ]
 //const arrNodes = [ "node-svc-01" ]
-const arrNodes = [ "node-svc-01", "node-svc-02" ]
+//const arrNodes = [ "node-svc-01", "node-svc-02" ]
 //const arrNodes = [ "node-svc-01", "node-svc-02" , "node-svc-03" ]
 const express = require('express');
 const fetch = require('node-fetch');
@@ -144,7 +148,7 @@ function buildURL (strLevel) {
   let nextLevel = intCurrLevel - 1;
   let numNodes = arrNodes.length; // to be derived from arrNodes
   let nextNode = nextLevel >= numNodes ? nextLevel % numNodes : nextLevel;
-  let strURL = "http://"+ arrNodes[nextNode] + ":3000/" + nextLevel;
+  let strURL = "http://"+ arrNodes[nextNode] + ":30100/" + nextLevel;
     
   console.log ("returning URL " + strURL);
    return(strURL);

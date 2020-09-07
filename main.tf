@@ -18,6 +18,9 @@ resource "google_container_cluster" "primary" {
   }
 
   node_config {
+    preemptible  = true
+    machine_type = "e2-micro"
+
     oauth_scopes = [
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/devstorage.read_only",
@@ -29,7 +32,7 @@ resource "google_container_cluster" "primary" {
       disable-legacy-endpoints = "true"
     }
 
-    tags = ["iac-kubernetes"]
+    tags = ["node-svc-k8s"]
   }
 
   timeouts {
