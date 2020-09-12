@@ -1,4 +1,5 @@
-// simple microservice. 
+// Node-Svc. Simple microservice. Includes both Express and Fetch. Calls itself, 
+// or can be replicated and will round-robin requests among peers.  
 
 'use strict';
 //const arrNodes = [ "xx.yy.xx.yy" ] // you might need this for K8S
