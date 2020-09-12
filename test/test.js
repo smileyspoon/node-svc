@@ -27,7 +27,7 @@ describe('Node-svc', () => {
             done();
             });
       });
-      it('Simplest request', (done) => {
+      it('Shutdown server', (done) => {
         chai.request("localhost:3000")
             .get('/999')
             .end((err, res) => {
