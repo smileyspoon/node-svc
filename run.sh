@@ -10,7 +10,7 @@ else
   
 fi
 
-docker run -d -p 8081:3000 charlestbetz/node-svc-v1
+docker run -d -p 8081:3000 dmacademy/node-svc
 docker ps
 export NODESVC_V_1=$(docker ps -a | awk 'FNR == 2 {print $NF}') 
 echo "exported" $NODESVC_V_1 'to $NODESVC_V_1'

@@ -1,8 +1,8 @@
-
-
-// simple microservice. 
+// Node-Svc. Simple microservice. Includes both Express and Fetch. Calls itself, 
+// or can be replicated and will round-robin requests among peers.  
 
 'use strict';
+//const arrNodes = [ "xx.yy.xx.yy" ] // you might need this for K8S
 //const arrNodes = [ "node-svc-01" ]
 const arrNodes = [ "node-svc-01", "node-svc-02" ]
 //const arrNodes = [ "node-svc-01", "node-svc-02" , "node-svc-03" ]
@@ -18,6 +18,10 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/999', (req, res) => {
+ return process.exit(999);
+})
 
 app.get('/0?', (req, res) => {     // matches either / or /0
   //(async () => {
@@ -81,14 +85,14 @@ console.log(`Running on ${PORT}`);
 
 console.log('Console: request is testing a simple self-get')
 
-fetch('http://localhost:3000')
+fetch('http://localhost:' + PORT)
   .then(response => response.json())
   .then(data => console.log(data));
 
 // test a simple self-post
 console.log('Console: request is testing a simple self-post')
 
-const url ='http://localhost:3000';
+const url ='http://localhost:' + PORT;
 const headers = {
   "Content-Type": "application/json"
 };
