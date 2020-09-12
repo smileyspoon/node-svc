@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t dmacademy/node-svc .
+docker build -t gcr.io/proven-sum-252123/node-svc .

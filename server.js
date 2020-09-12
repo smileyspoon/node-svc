@@ -2,11 +2,12 @@
 // or can be replicated and will round-robin requests among peers.  
 
 'use strict';
-//const arrNodes = [ "xx.yy.xx.yy" ] // you might need this for K8S
+const arrNodes = [ "34.70.205.65" ] // you might need this for K8S
 
 // vary these constants according to how many VMs you have deployed
+//const arrNodes = [ "localhost" ] // for testing on GCS
 //const arrNodes = [ "node-svc-01" ]
-const arrNodes = [ "node-svc-01", "node-svc-02" ]
+//const arrNodes = [ "node-svc-01", "node-svc-02" ]
 //const arrNodes = [ "node-svc-01", "node-svc-02" , "node-svc-03" ]
 
 const express = require('express');
@@ -14,7 +15,7 @@ const fetch = require('node-fetch');
 const bodyParser = require('body-parser')
 
 // Constants
-const PORT = 3000;
+const PORT = 30100;
 const HOST = '0.0.0.0';
 const app = express();
 
@@ -82,6 +83,9 @@ app.post('/:depth', (req, res) => {
   })();
 });
 
+///////////////////////////////////////////////////
+///////////// Main body////////////////////////////
+///////////////////////////////////////////////////
 
 app.listen(PORT, HOST);
 
@@ -154,7 +158,7 @@ function buildURL (strLevel) {
   let nextLevel = intCurrLevel - 1;
   let numNodes = arrNodes.length; // to be derived from arrNodes
   let nextNode = nextLevel >= numNodes ? nextLevel % numNodes : nextLevel;
-  let strURL = "http://"+ arrNodes[nextNode] + ":3000/" + nextLevel;
+  let strURL = "http://"+ arrNodes[nextNode] + ":" + PORT + "/" + nextLevel;
     
   console.log ("returning URL " + strURL);
    return(strURL);

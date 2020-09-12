@@ -8,8 +8,8 @@ spec:
     app: node-svc
   ports:
   - protocol: TCP
-    port: 3000
-    targetPort: 3000
+    port: 30100
+    targetPort: 30100
     nodePort: 30100
 ---
 
