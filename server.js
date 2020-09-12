@@ -32,7 +32,7 @@ app.get('/999', (req, res) => {
 
 app.get('/0?', (req, res) => {     // matches either / or /0
   (async () => {
-    res.write(dateIPStamp({ "Action":"GET" }, req.ip));
+    res.write(dateIPStamp({ "ThisAction":"GET" }, req.ip));
     res.status(200).end();
     console.log('Console: / Server returned success on get.');
   })();
