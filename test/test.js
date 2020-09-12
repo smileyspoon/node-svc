@@ -27,6 +27,18 @@ describe('Node-svc', () => {
             done();
             });
       });
+      it('Simplest request', (done) => {
+        chai.request("localhost:3000")
+            .get('/999')
+            .end((err, res) => {
+                 // res.should.have.status(200);
+                // res.body.should.be.a('array');
+                // res.body.length.should.be.eql(0);
+             if (err) return done(err);
+            done();
+            });
+      });
+
   });
 
 });

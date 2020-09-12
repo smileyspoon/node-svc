@@ -22,15 +22,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/999', (req, res) => {
- return process.exit(999);
+ (async () => {
+   res.write("Shutting down.");
+   res.status(200).end();
+   return process.exit(999);
+  })();
 })
 
 app.get('/0?', (req, res) => {     // matches either / or /0
-  //(async () => {
+  (async () => {
     res.write(dateIPStamp({ "action":"GET" }, req.ip));
     res.status(200).end();
     console.log('Console: / Server returned success on get.');
-  //y})();
+  })();
 });
 
 // app.get('/:depth(\d+)', (req, res) => {   // WHY does this not work
