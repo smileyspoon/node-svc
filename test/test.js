@@ -17,7 +17,7 @@ describe('Node-svc', () => {
   */
   describe('/GET /0', () => {
       it('Simplest request', (done) => {
-        chai.request("localhost:3000")
+        chai.request("localhost:30100")
             .get('/0')
             .end((err, res) => {
                   res.should.have.status(200);
