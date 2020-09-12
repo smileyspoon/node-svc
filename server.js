@@ -3,13 +3,15 @@
 
 'use strict';
 //const arrNodes = [ "xx.yy.xx.yy" ] // you might need this for K8S
+
+// vary these constants according to how many VMs you have deployed
 //const arrNodes = [ "node-svc-01" ]
 const arrNodes = [ "node-svc-01", "node-svc-02" ]
 //const arrNodes = [ "node-svc-01", "node-svc-02" , "node-svc-03" ]
+
 const express = require('express');
 const fetch = require('node-fetch');
 const bodyParser = require('body-parser')
-//const Request = require("request");
 
 // Constants
 const PORT = 3000;
