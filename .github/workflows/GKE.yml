@@ -13,13 +13,14 @@
 name: Build and Deploy to GKE
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+    - master
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER:  node-svc-k8s # TODO: update to cluster name
-  GKE_ZONE: us-central1-c   # TODO: update to cluster zone
+  GKE_CLUSTER:  node-svc-k8s # TODO: update to your cluster name
+  GKE_ZONE: us-central1-c   
   DEPLOYMENT_NAME: node-svc-deployment # TODO: update to deployment name
   IMAGE: node-svc
 
