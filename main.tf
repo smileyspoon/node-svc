@@ -1,3 +1,8 @@
+# per https://www.terraform.io/docs/providers/google/r/container_cluster.html, 
+# logging service "Defaults to logging.googleapis.com/kubernetes" 
+# monitoring service "Defaults to monitoring.googleapis.com/kubernetes"
+# which is why we see fluentd, prometheus, etc pods
+
 resource "google_container_cluster" "primary" {
   name               = "node-svc-k8s"
    location          = "us-central1-c"

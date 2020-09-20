@@ -24,7 +24,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/999', (req, res) => {
  (async () => {
+   console.log("***SHUTDOWN SIGNAL***");
    res.write("Shutting down.");
+
    res.status(200).end();
    return process.exit(999);
   })();
