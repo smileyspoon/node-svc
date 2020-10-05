@@ -1,1 +1,1 @@
-A simple Node microservice showing use of node-fetch and express and asynch logic. Calls itself recursively. See https://github.com/dm-academy/dp-course for associated tutorial. 
+A simple Node microservice showing use of node-fetch and express and async logic. Calls itself recursively. Includes a variety of provisioning and configuration resources (shell, Terrform, Packer, Ansible, Docker, Kubernetes). See https://github.com/dm-academy/dp-course for associated tutorial. 
