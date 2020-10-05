@@ -1,3 +1,9 @@
 = node-svc, a microservice learning example
 
-A simple Node microservice showing use of node-fetch and express and async logic. Calls itself recursively. Includes a variety of provisioning and configuration resources (shell, Terrform, Packer, Ansible, Docker, Kubernetes). See https://github.com/dm-academy/dp-course for associated tutorial. 
+A simple Node microservice showing use of node-fetch and express and async logic. Calls itself recursively. 
+
+Includes simplest possible Mocha/Chai test. Includes a variety of provisioning and configuration resources (shell, Terrform, Packer, Ansible, Docker, Kubernetes) and basic Github Actions pipeline for testing, building, pushing to gcr.io, and deploying to Kubernetes. 
+
+See https://github.com/dm-academy/dp-course for associated tutorial. 
+
+
