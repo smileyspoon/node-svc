@@ -1,1 +1,1 @@
-Simplest possible Node microservice that's a useful basis on which to build. See https://github.com/dm-academy/dp-course for associated tutorial. 
+A simple Node microservice showing use of node-fetch and express and asynch logic. Calls itself recursively. See https://github.com/dm-academy/dp-course for associated tutorial. 
