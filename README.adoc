@@ -4,6 +4,8 @@ A simple Node microservice showing use of node-fetch and express and async logic
 
 Includes simplest possible Mocha/Chai test. Includes a variety of provisioning and configuration resources (shell, Terrform, Packer, Ansible, Docker, Kubernetes) and basic Github Actions pipeline for testing, building, pushing to gcr.io, and deploying to Kubernetes. 
 
+Not all scripts are executable; some are for reference only (e.g. logging.sh). 
+
 See https://github.com/dm-academy/dp-course for associated tutorial. 
 
 
