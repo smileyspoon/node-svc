@@ -10,6 +10,7 @@ const arrNodes = [ "35.194.5.71" ] // you might need this for K8S
 //const arrNodes = [ "node-svc-01", "node-svc-02" ]
 //const arrNodes = [ "node-svc-01", "node-svc-02" , "node-svc-03" ]
 
+
 const express = require('express');
 const fetch = require('node-fetch');
 const bodyParser = require('body-parser')
@@ -22,6 +23,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// shuts down application
 app.get('/999', (req, res) => {
  (async () => {
    console.warn("***SHUTDOWN SIGNAL***");
@@ -32,6 +34,7 @@ app.get('/999', (req, res) => {
   })();
 })
 
+// simplest get; recursion end point
 app.get('/0?', (req, res) => {     // matches either / or /0
   (async () => {
     // A simple change is to alter the returned data, 
