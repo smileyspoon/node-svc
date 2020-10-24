@@ -49,7 +49,7 @@ app.get('/', (req, res) => {     // matches either / or /0
 });
 
 // app.get('/:depth(\d+)', (req, res) => {   // WHY does this not work
-app.get('/:depth', (req, res) => {   // everything else but / or /0
+app.get('/', (req, res) => {   // everything else but / or /0
   console.log("/n GET, making GET subrequest");
   if (!boolValidateRoute(res, req.params.depth)) return;
   let strURL = buildURL(req.params.depth);
@@ -64,7 +64,7 @@ app.get('/:depth', (req, res) => {   // everything else but / or /0
 });
 
 
-app.post('/0?', (req, res) => {     // matches either / or /0
+app.post('/', (req, res) => {     // matches either / or /0
   console.log ("Console: entered / post");
   console.log("Console: / received " + JSON.stringify(req.body));
   let recd = req.body;
