@@ -36,7 +36,7 @@ app.get('/999', (req, res) => {
 })
 
 // simplest get; recursion end point
-app.get('/1?', (req, res) => {     // matches either / or /0
+app.get('/0?', (req, res) => {     // matches either / or /0
   (async () => {
     // A simple change is to alter the returned data, 
     // e.g. change "ThisAction" to "Action"
@@ -62,7 +62,7 @@ app.get('/:depth', (req, res) => {   // everything else but / or /0
 });
 
 
-app.post('/1?', (req, res) => {     // matches either / or /0
+app.post('/0?', (req, res) => {     // matches either / or /0
   console.log ("Console: entered / post");
   console.log("Console: / received " + JSON.stringify(req.body));
   let recd = req.body;
