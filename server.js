@@ -164,7 +164,7 @@ function buildURL (strLevel) {
   let intCurrLevel = parseInt(strLevel);
   let nextLevel = intCurrLevel - 1;
   let numNodes = arrNodes.length; // to be derived from arrNodes
-  let nextNode = nextLevel >= numNodes ? nextLevel % numNodes : nextLevel;
+  let nextNode = nextLevel > numNodes ? nextLevel % numNodes : nextLevel;
   let strURL = "http://"+ arrNodes[nextNode] + ":" + PORT + "/" + nextLevel;
     
   console.log ("returning URL " + strURL);
