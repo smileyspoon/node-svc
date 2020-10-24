@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: node-svc
-        image: gcr.io/proven-sum-252123/node-svc:latest 
+        image: us.gcr.io/level-research-289323/node-sv:latest 
 
         #image: dmacademy/node-svc:latest #If you don't specify a registry hostname, Kubernetes assumes that you mean the Docker public registry.
                                   #https://kubernetes.io/docs/concepts/containers/images/

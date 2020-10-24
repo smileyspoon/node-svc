@@ -1,8 +1,10 @@
 // Node-Svc. Simple microservice. Includes both Express and Fetch. Calls itself, 
 // or can be replicated and will round-robin requests among peers.  
 
+
+
 'use strict';
-const arrNodes = [ "35.194.5.71" ] // you might need this for K8S
+const arrNodes = [ "http://35.226.31.140/" ] // you might need to edit this for K8S
 
 // vary these constants according to how many VMs you have deployed
 //const arrNodes = [ "localhost" ] // for testing on GCS
@@ -14,8 +16,6 @@ const arrNodes = [ "35.194.5.71" ] // you might need this for K8S
 const express = require('express');
 const fetch = require('node-fetch');
 const bodyParser = require('body-parser')
-
-
 
 // Constants
 const PORT = 30100;
@@ -37,7 +37,7 @@ app.get('/999', (req, res) => {
 })
 
 // simplest get; recursion end point
-app.get('/20?', (req, res) => {     // matches either / or /0
+app.get('/0?', (req, res) => {     // matches either / or /0
   (async () => {
     // A simple change is to alter the returned data, 
     // e.g. change "ThisAction" to "Action"
@@ -173,4 +173,3 @@ function buildURL (strLevel) {
    return(strURL);
 
 }
-

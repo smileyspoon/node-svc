@@ -22,7 +22,7 @@ env:
   GKE_CLUSTER:  node-svc-k8s # TODO: update to your cluster name
   GKE_ZONE: us-central1-c   
   DEPLOYMENT_NAME: node-svc-deployment # TODO: update to deployment name
-  IMAGE: node-svc
+  IMAGE: node-sv
 
 jobs:
   setup-build-publish-deploy:
@@ -64,14 +64,14 @@ jobs:
     - name: Build
       run: |-
         docker build \
-          --tag "gcr.io/$PROJECT_ID/$IMAGE:latest" \
+          --tag "us.gcr.io/level-research-289323/$IMAGE:latest" \
           --build-arg GITHUB_REF="$GITHUB_REF" . 
            
 
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-
-        docker push "gcr.io/$PROJECT_ID/$IMAGE:latest"
+        docker push "us.gcr.io/level-research-289323/$IMAGE:latest"
         
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
