@@ -38,18 +38,18 @@ app.get('/999', (req, res) => {
 })
 
 // simplest get; recursion end point
-app.get('/', (req, res) => {     // matches either / or /0
+app.get('/0?', (req, res) => {     // matches either / or /0
   (async () => {
     // A simple change is to alter the returned data, 
     // e.g. change "ThisAction" to "Action"
-    res.write(dateIPStamp({ "ThisAction":"GET" }, req.ip));
+    res.write(dateIPStamp({ "Action":"GET" }, req.ip));
     res.status(200).end();
     console.log('Console: / Server returned success on get.');
   })();
 });
 
 // app.get('/:depth(\d+)', (req, res) => {   // WHY does this not work
-app.get('/', (req, res) => {   // everything else but / or /0
+app.get('/:depth', (req, res) => {   // everything else but / or /0
   console.log("/n GET, making GET subrequest");
   if (!boolValidateRoute(res, req.params.depth)) return;
   let strURL = buildURL(req.params.depth);
@@ -64,7 +64,7 @@ app.get('/', (req, res) => {   // everything else but / or /0
 });
 
 
-app.post('/', (req, res) => {     // matches either / or /0
+app.post('/0?', (req, res) => {     // matches either / or /0
   console.log ("Console: entered / post");
   console.log("Console: / received " + JSON.stringify(req.body));
   let recd = req.body;
