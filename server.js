@@ -77,6 +77,7 @@ app.post('/:depth', (req, res) => {
   console.log ("Console: /n POST");
   if (!boolValidateRoute(res, req.params.depth)) return;
   let strURL = buildURL(req.params.depth);
+  debugger;
   (async () => {
         console.log("/n POST trying subrequest");
         const recd = await req.body;
