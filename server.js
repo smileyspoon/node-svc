@@ -2,9 +2,6 @@
 // or can be replicated and will round-robin requests among peers.  
 
 
-
-
-
 'use strict';
 const arrNodes = [ "http://35.226.31.140/" ] // you might need to edit this for K8S
 
