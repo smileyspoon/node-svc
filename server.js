@@ -1,9 +1,8 @@
 // Node-Svc. Simple microservice. Includes both Express and Fetch. Calls itself, 
 // or can be replicated and will round-robin requests among peers.  
 
-
 'use strict';
-const arrNodes = [ "http://35.226.31.140/" ] // you might need to edit this for K8S
+const arrNodes = [ "35.194.5.71" ] // you might need to edit this for K8S
 
 // vary these constants according to how many VMs you have deployed
 //const arrNodes = [ "localhost" ] // for testing on GCS
@@ -47,7 +46,7 @@ app.get('/0?', (req, res) => {     // matches either / or /0
 });
 
 // app.get('/:depth(\d+)', (req, res) => {   // WHY does this not work
-app.get('/:depth', (req, res) => {   // everything else but / or /0
+app.get('/:depth(\d+)', (req, res) => {   // everything else but / or /0
   console.log("/n GET, making GET subrequest");
   if (!boolValidateRoute(res, req.params.depth)) return;
   let strURL = buildURL(req.params.depth);
@@ -73,11 +72,10 @@ app.post('/0?', (req, res) => {     // matches either / or /0
   console.log('Console: / returned ' + stampedRecd);
 });
 
-app.post('/:depth', (req, res) => {
+app.post('/:depth(\d+)', (req, res) => {
   console.log ("Console: /n POST");
   if (!boolValidateRoute(res, req.params.depth)) return;
   let strURL = buildURL(req.params.depth);
-  debugger;
   (async () => {
         console.log("/n POST trying subrequest");
         const recd = await req.body;
