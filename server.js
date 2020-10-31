@@ -2,13 +2,16 @@
 // or can be replicated and will round-robin requests among peers.  
 
 'use strict';
-const arrNodes = [ "35.194.5.71" ] // you might need to edit this for K8S
 
-// vary these constants according to how many VMs you have deployed
-//const arrNodes = [ "localhost" ] // for testing on GCS
-//const arrNodes = [ "node-svc-01" ]
-//const arrNodes = [ "node-svc-01", "node-svc-02" ]
-//const arrNodes = [ "node-svc-01", "node-svc-02" , "node-svc-03" ]
+// vary these constants according to where you are running (GCS, VMs, K8S) and how many VMs you have, if that's the lesson)
+// to do: this should be a command-line parameter that lets the app know how it is running
+//const arrNodes = [ "localhost" ]                                    // for testing on GCS
+//const arrNodes = [ "node-svc-01" ]                                  // for 1 VM
+const arrNodes = [ "node-svc-01", "node-svc-02" ]                   // for 2 VMs
+//const arrNodes = [ "node-svc-01", "node-svc-02" , "node-svc-03" ]   // for 3 VMs
+//const arrNodes = [ process.env.NODE_SVC_PUBLIC_SERVICE_HOST  ];       //  use this for K8S
+
+console.log("service host is " + arrNodes[0]);
 
 
 const express = require('express');
@@ -46,7 +49,7 @@ app.get('/0?', (req, res) => {     // matches either / or /0
 });
 
 // app.get('/:depth(\d+)', (req, res) => {   // WHY does this not work
-app.get('/:depth(\d+)', (req, res) => {   // everything else but / or /0
+app.get('/:depth', (req, res) => {   // everything else but / or /0
   console.log("/n GET, making GET subrequest");
   if (!boolValidateRoute(res, req.params.depth)) return;
   let strURL = buildURL(req.params.depth);
@@ -72,7 +75,7 @@ app.post('/0?', (req, res) => {     // matches either / or /0
   console.log('Console: / returned ' + stampedRecd);
 });
 
-app.post('/:depth(\d+)', (req, res) => {
+app.post('/:depth', (req, res) => {
   console.log ("Console: /n POST");
   if (!boolValidateRoute(res, req.params.depth)) return;
   let strURL = buildURL(req.params.depth);
